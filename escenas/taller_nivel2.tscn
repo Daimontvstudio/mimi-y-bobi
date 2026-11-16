@@ -104,4 +104,5 @@ script = ExtResource("15_gestor")
 [node name="BotonCasa" type="Node2D" parent="CapaUI"]
 position = Vector2(120, 120)
 script = ExtResource("16_casa")
+escena_destino = "res://escenas/selector_juegos.tscn"
 icono = ExtResource("17_icono_casa")

@@ -18,7 +18,11 @@ func _initialize() -> void:
 	for archivo in DirAccess.get_files_at("res://escenas"):
 		if archivo.ends_with(".tscn"):
 			_escenas.append("res://escenas/" + archivo)
-	print("VERIF_INICIO escenas=", _escenas.size())
+	# Con un personaje elegido, el selector de juegos se construye completo.
+	var catalogo := root.get_node_or_null("Catalogo")
+	if catalogo:
+		catalogo.set("personaje_elegido", 0)
+	print("VERIF_INICIO escenas=", _escenas.size(), " autoloads=", catalogo != null)
 
 
 func _process(_delta: float) -> bool:

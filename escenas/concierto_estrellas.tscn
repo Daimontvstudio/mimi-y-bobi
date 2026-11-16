@@ -1,0 +1,55 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Texture2D" path="res://arte/estrella.png" id="1_r"]
+[ext_resource type="Texture2D" path="res://arte/halo.png" id="2_r"]
+[ext_resource type="Script" path="res://scripts/concierto_estrellas.gd" id="3_r"]
+[ext_resource type="Texture2D" path="res://arte/fondo_concierto.png" id="4_r"]
+[ext_resource type="Script" path="res://scripts/personaje_principal.gd" id="5_r"]
+[ext_resource type="Texture2D" path="res://arte/mimi.png" id="6_r"]
+[ext_resource type="Script" path="res://scripts/retroalimentacion.gd" id="7_r"]
+[ext_resource type="AudioStream" path="res://audio/nota_do.wav" id="8_r"]
+[ext_resource type="Texture2D" path="res://arte/corazon.png" id="9_r"]
+[ext_resource type="Script" path="res://scripts/vigilante_inactividad.gd" id="10_r"]
+[ext_resource type="Script" path="res://scripts/boton_casa.gd" id="11_r"]
+[ext_resource type="Texture2D" path="res://arte/casa.png" id="12_r"]
+
+[node name="ConciertoEstrellas" type="Node2D"]
+script = ExtResource("3_r")
+textura_estrella = ExtResource("1_r")
+textura_halo = ExtResource("2_r")
+
+[node name="Fondo" type="Sprite2D" parent="."]
+texture = ExtResource("4_r")
+centered = false
+
+[node name="Cielo" type="Node2D" parent="."]
+
+[node name="Mimi" type="Node2D" parent="." groups=["personajes"]]
+position = Vector2(300, 1010)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("5_r")
+nota_propia = 0
+color_a = Color(1.000, 0.310, 0.722, 1.0)
+color_b = Color(1.000, 0.824, 0.247, 1.0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Mimi"]
+position = Vector2(0, -242)
+texture = ExtResource("6_r")
+
+[node name="Retroalimentacion" type="Node2D" parent="."]
+script = ExtResource("7_r")
+nota_base = ExtResource("8_r")
+textura_estrella = ExtResource("1_r")
+textura_corazon = ExtResource("9_r")
+
+[node name="VigilanteInactividad" type="Node" parent="."]
+script = ExtResource("10_r")
+
+[node name="CapaUI" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="BotonCasa" type="Node2D" parent="CapaUI"]
+position = Vector2(120, 120)
+script = ExtResource("11_r")
+icono = ExtResource("12_r")
+escena_destino = "res://escenas/selector_juegos.tscn"

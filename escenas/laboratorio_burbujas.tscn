@@ -1,0 +1,63 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Texture2D" path="res://arte/burbuja.png" id="1_r"]
+[ext_resource type="AudioStream" path="res://audio/pop.wav" id="2_r"]
+[ext_resource type="AudioStream" path="res://audio/boing.wav" id="3_r"]
+[ext_resource type="Script" path="res://scripts/laboratorio_burbujas.gd" id="4_r"]
+[ext_resource type="Texture2D" path="res://arte/fondo_laboratorio.png" id="5_r"]
+[ext_resource type="Texture2D" path="res://arte/matraz.png" id="6_r"]
+[ext_resource type="Script" path="res://scripts/personaje_principal.gd" id="7_r"]
+[ext_resource type="Texture2D" path="res://arte/bobi.png" id="8_r"]
+[ext_resource type="Script" path="res://scripts/retroalimentacion.gd" id="9_r"]
+[ext_resource type="AudioStream" path="res://audio/nota_do.wav" id="10_r"]
+[ext_resource type="Texture2D" path="res://arte/estrella.png" id="11_r"]
+[ext_resource type="Texture2D" path="res://arte/corazon.png" id="12_r"]
+[ext_resource type="Script" path="res://scripts/vigilante_inactividad.gd" id="13_r"]
+[ext_resource type="Script" path="res://scripts/boton_casa.gd" id="14_r"]
+[ext_resource type="Texture2D" path="res://arte/casa.png" id="15_r"]
+
+[node name="LaboratorioBurbujas" type="Node2D"]
+script = ExtResource("4_r")
+textura_burbuja = ExtResource("1_r")
+sonido_pop = ExtResource("2_r")
+sonido_boing = ExtResource("3_r")
+
+[node name="Fondo" type="Sprite2D" parent="."]
+texture = ExtResource("5_r")
+centered = false
+
+[node name="Matraz" type="Sprite2D" parent="."]
+position = Vector2(1170, 790)
+texture = ExtResource("6_r")
+
+[node name="Burbujas" type="Node2D" parent="."]
+
+[node name="Bobi" type="Node2D" parent="." groups=["personajes"]]
+position = Vector2(300, 940)
+scale = Vector2(0.85, 0.85)
+script = ExtResource("7_r")
+nota_propia = 1
+color_a = Color(0.247, 0.769, 1.000, 1.0)
+color_b = Color(0.616, 1.000, 0.227, 1.0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bobi"]
+position = Vector2(0, -242)
+texture = ExtResource("8_r")
+
+[node name="Retroalimentacion" type="Node2D" parent="."]
+script = ExtResource("9_r")
+nota_base = ExtResource("10_r")
+textura_estrella = ExtResource("11_r")
+textura_corazon = ExtResource("12_r")
+
+[node name="VigilanteInactividad" type="Node" parent="."]
+script = ExtResource("13_r")
+
+[node name="CapaUI" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="BotonCasa" type="Node2D" parent="CapaUI"]
+position = Vector2(120, 120)
+script = ExtResource("14_r")
+icono = ExtResource("15_r")
+escena_destino = "res://escenas/selector_juegos.tscn"

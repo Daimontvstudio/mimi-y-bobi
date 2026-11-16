@@ -18,24 +18,18 @@ Ambas versiones se generan solas con GitHub Actions (`.github/workflows/exportar
 **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 ## Contenido actual
-| Escena | Descripción |
-|---|---|
-| `escenas/menu_principal.tscn` | Menú con cuatro botones gigantes (Mimí, Bobi, Lumen, Kubo) y Nubi flotando como guía |
-| `escenas/jardin_nivel1.tscn` | **Nivel 1 · El Jardín de las Sorpresas Musicales**: tres zonas gigantes con notas pentatónicas y partículas |
-| `escenas/taller_nivel2.tscn` | **Nivel 2 · El Taller de Bobi**: arrastrar engranajes a una máquina con imanes táctiles |
-| `escenas/lumen_nivel3.tscn` | **Nivel 3 · El Jardín de Lumen**: memoria de destellos musicales, con reintentos dulces |
-| `escenas/kubo_nivel4.tscn` | **Nivel 4 · La Construcción de Kubo**: encajar bloques grandes en siluetas con imanes |
+**Menú** con cinco personajes gigantes → **selector** con sus minijuegos (paneles de media pantalla).
 
-### Personajes y su nota
-| Personaje | Nota | Papel |
-|---|---|---|
-| Mimí | Do | Ritmo y música |
-| Bobi | Re | Causa-efecto |
-| Lumen | Mi | Memoria y luces |
-| Kubo | Sol | Formas y espacio |
-| Nubi | La | Guía de sombras y siluetas |
+| Personaje | Nota | Minijuego 1 | Minijuego 2 |
+|---|---|---|---|
+| Mimí (ritmo) | Do | Jardín de las Sorpresas Musicales | **El Concierto de las Estrellas**: atrapar estrellas fugaces que tocan una melodía |
+| Bobi (causa-efecto) | Re | El Taller de Bobi | **El Laboratorio de Burbujas**: reventar burbujas y soplar el matraz |
+| Lumen (memoria y luces) | Mi | El Jardín de Lumen | **El Camino de Luciérnagas**: encontrar luciérnagas escondidas en frascos |
+| Kubo (formas y espacio) | Sol | La Construcción de Kubo | **La Torre Mágica**: apilar bloques con un imán suave |
+| Nubi (sombras y siluetas) | La | **El Espejo de las Nubes**: llevar nubes a su silueta | — |
 
 Al tocar a cualquier personaje suena su nota con partículas de sus colores.
+Los minijuegos y sus iconos se definen en `scripts/catalogo.gd`.
 
 ## Estructura
 ```
@@ -54,7 +48,8 @@ docs/      Documento de diseño y vista previa
 | `retroalimentacion.gd` | Notas pentatónicas, partículas, fiesta rítmica (~83 ppm) y nota propia de cada personaje |
 | `personaje_principal.gd` | Rebote de plastilina y llamadas de atención (Tween o AnimationPlayer) |
 | `gestor_arrastre.gd` · `pieza_arrastrable.gd` · `zona_iman.gd` | Arrastrar y soltar con imán, formas opcionales, encaje automático, regreso suave y pistas |
-| `orbe_luz.gd` | Flor-orbe que se enciende con halo (Nivel 3) |
+| `orbe_luz.gd` | Objeto que se enciende con halo (orbes de Lumen, frascos de luciérnagas) |
+| `catalogo.gd` · `selector_juegos.gd` | Autoload con personajes y juegos · pantalla de selección generada sola |
 | `herramientas/verificar.gd` | Prueba automática: GitHub Actions carga todas las escenas y publica `verificacion.txt` |
 | `boton_casa.gd` · `transicion.gd` | Volver al menú manteniendo pulsado 1,2 s · fundidos entre escenas |
 

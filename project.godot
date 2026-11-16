@@ -6,9 +6,9 @@ config_version=5
 [application]
 
 config/name="Aventuras Mágicas con Mimí y Bobi"
-config/description="Menú · N1 Jardín de las Sorpresas Musicales · N2 Taller de Bobi · N3 Jardín de Lumen · N4 Construcción de Kubo"
+config/description="Juego educativo para 2-3 años: 5 personajes y 9 minijuegos sin frustración"
 run/main_scene="res://escenas/menu_principal.tscn"
-config/version="0.3.0"
+config/version="0.4.0"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.png"
 boot_splash/bg_color=Color(0.07, 0.04, 0.18, 1)
@@ -16,6 +16,7 @@ boot_splash/bg_color=Color(0.07, 0.04, 0.18, 1)
 [autoload]
 
 Transicion="*res://scripts/transicion.gd"
+Catalogo="*res://scripts/catalogo.gd"
 
 [display]
 

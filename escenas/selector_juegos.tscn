@@ -1,0 +1,38 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/selector_juegos.gd" id="1_r"]
+[ext_resource type="Texture2D" path="res://arte/fondo_selector.png" id="2_r"]
+[ext_resource type="Script" path="res://scripts/retroalimentacion.gd" id="3_r"]
+[ext_resource type="AudioStream" path="res://audio/nota_do.wav" id="4_r"]
+[ext_resource type="Texture2D" path="res://arte/estrella.png" id="5_r"]
+[ext_resource type="Texture2D" path="res://arte/corazon.png" id="6_r"]
+[ext_resource type="Script" path="res://scripts/vigilante_inactividad.gd" id="7_r"]
+[ext_resource type="Script" path="res://scripts/boton_casa.gd" id="8_r"]
+[ext_resource type="Texture2D" path="res://arte/casa.png" id="9_r"]
+
+[node name="SelectorJuegos" type="Node2D"]
+script = ExtResource("1_r")
+
+[node name="Fondo" type="Sprite2D" parent="."]
+texture = ExtResource("2_r")
+centered = false
+
+[node name="Retroalimentacion" type="Node2D" parent="."]
+script = ExtResource("3_r")
+nota_base = ExtResource("4_r")
+textura_estrella = ExtResource("5_r")
+textura_corazon = ExtResource("6_r")
+
+[node name="VigilanteInactividad" type="Node" parent="."]
+script = ExtResource("7_r")
+
+[node name="CapaToque" type="CanvasLayer" parent="."]
+
+[node name="CapaUI" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="BotonCasa" type="Node2D" parent="CapaUI"]
+position = Vector2(120, 120)
+script = ExtResource("8_r")
+icono = ExtResource("9_r")
+escena_destino = "res://escenas/menu_principal.tscn"

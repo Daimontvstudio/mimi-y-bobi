@@ -1,0 +1,133 @@
+[gd_scene load_steps=20 format=3]
+
+[ext_resource type="Texture2D" path="res://arte/nube_corazon.png" id="1_r"]
+[ext_resource type="Texture2D" path="res://arte/nube_estrella.png" id="2_r"]
+[ext_resource type="Texture2D" path="res://arte/nube_luna.png" id="3_r"]
+[ext_resource type="Texture2D" path="res://arte/nube_gota.png" id="4_r"]
+[ext_resource type="Texture2D" path="res://arte/nube_flor.png" id="5_r"]
+[ext_resource type="Script" path="res://scripts/espejo_nubes.gd" id="6_r"]
+[ext_resource type="Texture2D" path="res://arte/fondo_espejo.png" id="7_r"]
+[ext_resource type="Script" path="res://scripts/personaje_principal.gd" id="8_r"]
+[ext_resource type="Texture2D" path="res://arte/nubi.png" id="9_r"]
+[ext_resource type="Script" path="res://scripts/zona_iman.gd" id="10_r"]
+[ext_resource type="Script" path="res://scripts/pieza_arrastrable.gd" id="11_r"]
+[ext_resource type="Script" path="res://scripts/gestor_arrastre.gd" id="12_r"]
+[ext_resource type="Script" path="res://scripts/retroalimentacion.gd" id="13_r"]
+[ext_resource type="AudioStream" path="res://audio/nota_do.wav" id="14_r"]
+[ext_resource type="Texture2D" path="res://arte/estrella.png" id="15_r"]
+[ext_resource type="Texture2D" path="res://arte/corazon.png" id="16_r"]
+[ext_resource type="Script" path="res://scripts/vigilante_inactividad.gd" id="17_r"]
+[ext_resource type="Script" path="res://scripts/boton_casa.gd" id="18_r"]
+[ext_resource type="Texture2D" path="res://arte/casa.png" id="19_r"]
+
+[node name="EspejoNubes" type="Node2D"]
+script = ExtResource("6_r")
+texturas = Array[Texture2D]([ExtResource("1_r"), ExtResource("2_r"), ExtResource("3_r"), ExtResource("4_r"), ExtResource("5_r")])
+
+[node name="Fondo" type="Sprite2D" parent="."]
+texture = ExtResource("7_r")
+centered = false
+
+[node name="Nubi" type="Node2D" parent="." groups=["personajes"]]
+position = Vector2(230, 700)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("8_r")
+nota_propia = 4
+color_a = Color(0.682, 0.910, 1.000, 1.0)
+color_b = Color(1.000, 0.824, 0.478, 1.0)
+nodo_flotante = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Nubi"]
+position = Vector2(0, -242)
+texture = ExtResource("9_r")
+
+[node name="Espejo" type="Node2D" parent="."]
+
+[node name="Silueta1" type="Node2D" parent="Espejo"]
+position = Vector2(1340, 430)
+script = ExtResource("10_r")
+radio_iman = 250.0
+radio_visual = 135.0
+color_guia = Color(1.000, 0.824, 0.478, 1.0)
+forma = &"corazon"
+
+[node name="Silueta" type="Sprite2D" parent="Espejo/Silueta1"]
+modulate = Color(0.2, 0.25, 0.45, 0.5)
+texture = ExtResource("1_r")
+
+[node name="Silueta2" type="Node2D" parent="Espejo"]
+position = Vector2(1650, 430)
+script = ExtResource("10_r")
+radio_iman = 250.0
+radio_visual = 135.0
+color_guia = Color(1.000, 0.824, 0.478, 1.0)
+forma = &"estrella"
+
+[node name="Silueta" type="Sprite2D" parent="Espejo/Silueta2"]
+modulate = Color(0.2, 0.25, 0.45, 0.5)
+texture = ExtResource("2_r")
+
+[node name="Silueta3" type="Node2D" parent="Espejo"]
+position = Vector2(1960, 430)
+script = ExtResource("10_r")
+radio_iman = 250.0
+radio_visual = 135.0
+color_guia = Color(1.000, 0.824, 0.478, 1.0)
+forma = &"luna"
+
+[node name="Silueta" type="Sprite2D" parent="Espejo/Silueta3"]
+modulate = Color(0.2, 0.25, 0.45, 0.5)
+texture = ExtResource("3_r")
+
+[node name="Nubes" type="Node2D" parent="."]
+
+[node name="Nube1" type="Node2D" parent="Nubes"]
+position = Vector2(560, 930)
+script = ExtResource("11_r")
+radio_agarre = 185.0
+puede_girar = false
+forma = &"corazon"
+
+[node name="Visual" type="Sprite2D" parent="Nubes/Nube1"]
+texture = ExtResource("1_r")
+
+[node name="Nube2" type="Node2D" parent="Nubes"]
+position = Vector2(880, 930)
+script = ExtResource("11_r")
+radio_agarre = 185.0
+puede_girar = false
+forma = &"estrella"
+
+[node name="Visual" type="Sprite2D" parent="Nubes/Nube2"]
+texture = ExtResource("2_r")
+
+[node name="Nube3" type="Node2D" parent="Nubes"]
+position = Vector2(1200, 930)
+script = ExtResource("11_r")
+radio_agarre = 185.0
+puede_girar = false
+forma = &"luna"
+
+[node name="Visual" type="Sprite2D" parent="Nubes/Nube3"]
+texture = ExtResource("3_r")
+
+[node name="GestorArrastre" type="Node2D" parent="."]
+script = ExtResource("12_r")
+
+[node name="Retroalimentacion" type="Node2D" parent="."]
+script = ExtResource("13_r")
+nota_base = ExtResource("14_r")
+textura_estrella = ExtResource("15_r")
+textura_corazon = ExtResource("16_r")
+
+[node name="VigilanteInactividad" type="Node" parent="."]
+script = ExtResource("17_r")
+
+[node name="CapaUI" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="BotonCasa" type="Node2D" parent="CapaUI"]
+position = Vector2(120, 120)
+script = ExtResource("18_r")
+icono = ExtResource("19_r")
+escena_destino = "res://escenas/menu_principal.tscn"

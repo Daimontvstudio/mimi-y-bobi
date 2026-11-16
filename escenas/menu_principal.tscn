@@ -22,8 +22,8 @@ texture = ExtResource("2_r")
 centered = false
 
 [node name="Mimi" type="Node2D" parent="." groups=["personajes"]]
-position = Vector2(292, 1000)
-scale = Vector2(0.82, 0.82)
+position = Vector2(234, 960)
+scale = Vector2(0.74, 0.74)
 script = ExtResource("3_r")
 nota_propia = 0
 color_a = Color(1.000, 0.310, 0.722, 1.0)
@@ -35,8 +35,8 @@ position = Vector2(0, -242)
 texture = ExtResource("4_r")
 
 [node name="Bobi" type="Node2D" parent="." groups=["personajes"]]
-position = Vector2(877, 1000)
-scale = Vector2(0.82, 0.82)
+position = Vector2(702, 960)
+scale = Vector2(0.74, 0.74)
 script = ExtResource("3_r")
 nota_propia = 1
 color_a = Color(0.247, 0.769, 1.000, 1.0)
@@ -48,8 +48,8 @@ position = Vector2(0, -242)
 texture = ExtResource("5_r")
 
 [node name="Lumen" type="Node2D" parent="." groups=["personajes"]]
-position = Vector2(1462, 1000)
-scale = Vector2(0.82, 0.82)
+position = Vector2(1170, 960)
+scale = Vector2(0.74, 0.74)
 script = ExtResource("3_r")
 nota_propia = 2
 color_a = Color(0.706, 0.361, 1.000, 1.0)
@@ -61,8 +61,8 @@ position = Vector2(0, -242)
 texture = ExtResource("6_r")
 
 [node name="Kubo" type="Node2D" parent="." groups=["personajes"]]
-position = Vector2(2047, 1000)
-scale = Vector2(0.82, 0.82)
+position = Vector2(1638, 960)
+scale = Vector2(0.74, 0.74)
 script = ExtResource("3_r")
 nota_propia = 3
 color_a = Color(1.000, 0.231, 0.361, 1.0)
@@ -74,12 +74,13 @@ position = Vector2(0, -242)
 texture = ExtResource("7_r")
 
 [node name="Nubi" type="Node2D" parent="." groups=["personajes"]]
-position = Vector2(1170, 246)
-scale = Vector2(0.5, 0.5)
+position = Vector2(2106, 960)
+scale = Vector2(0.74, 0.74)
 script = ExtResource("3_r")
 nota_propia = 4
 color_a = Color(0.682, 0.910, 1.000, 1.0)
 color_b = Color(1.000, 0.824, 0.478, 1.0)
+tocable = false
 nodo_flotante = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="Nubi"]

@@ -33,8 +33,11 @@ Juego educativo y de exploración interactiva para móviles (Android / iOS), pen
 | **Nubi** (ayudante) | Celeste pastel y dorado suave | Esponjita etérea; formas y sombras |
 
 ## Niveles
-### Menú principal
-Cuatro botones gigantes (una columna cada uno): Mimí (nota musical), Bobi (engranaje), Lumen (estrella de luz) y Kubo (bloques). Nubi flota arriba como guía y canta su nota al tocarla. Los personajes entran con un "pop" escalonado; al elegir, fanfarria de 3 notas y fundido al nivel.
+### Menú principal y selector
+- Menú: cinco columnas gigantes a toda altura (Mimí, Bobi, Lumen, Kubo, Nubi), con los iconos de sus minijuegos encima.
+- Selector: un panel de media pantalla por minijuego, con su icono grande; el personaje saluda arriba.
+- Personajes con un solo juego (Nubi) van directos al juego.
+- La casita (mantener 1,2 s) vuelve del juego al selector, y del selector al menú.
 
 ### Nivel 1 · El Jardín de las Sorpresas Musicales (Mimí)
 Tres zonas gigantes en el tercio inferior, cada una con una flor brillante. Cada toque: nota pentatónica (grave → aguda de izquierda a derecha), partículas y rebote de Mimí.
@@ -58,6 +61,21 @@ Bloques grandes (círculo rojo, cuadrado amarillo, triángulo azul) y siluetas e
 - Si un bloque se suelta lejos, vuelve flotando y su silueta correcta brilla como pista.
 - Dibujo completo: fiesta rítmica y el tablero cambia de diseño.
 
+### Mimí · El Concierto de las Estrellas
+Estrellas fugaces lentas cruzan el cielo. Cada estrella atrapada (basta tocar cerca) suena con la siguiente nota de una melodía pentatónica y vuela a una constelación arriba. Al completar la melodía, la constelación la canta entera y hay fiesta. Las estrellas que nadie toca se van sin más.
+
+### Bobi · El Laboratorio de Burbujas
+Burbujas de colores suben del matraz. Tocar una: "¡plop!" + nota (grandes graves, pequeñas agudas); algunas guardan una sorpresa. Tocar el matraz: "¡boing!" y un chorro de burbujas. Cada 12 burbujas, mini fiesta. Las burbujas que llegan arriba se desvanecen sin sonido.
+
+### Lumen · El Camino de Luciérnagas
+Lumen esconde 1, 2 o 3 luciérnagas en frascos. Al encontrarlas, salen brillando y se posan en un camino de piedras; con todas, el camino canta una melodía. Un frasco vacío solo da un brillito suave; tras 2 vacíos (o al distraerse), los frascos correctos laten.
+
+### Kubo · La Torre Mágica
+Un imán suave marca el siguiente piso; cualquier bloque vale. Cada piso suena más agudo. Con 5 pisos, la torre se vuelve mágica (cada piso canta, fiesta) y los bloques suben flotando al cielo. La bandeja siempre se rellena; la torre nunca se cae.
+
+### Nubi · El Espejo de las Nubes
+En un espejo dorado aparecen 3 siluetas (corazón, estrella, luna, gota, flor). Las nubes con esas formas se deslizan hasta su silueta; el imán solo atrae a la forma correcta. Encajar: lluvia de destellos dorados. Las tres: fiesta y nuevas formas.
+
 ## Sonido y celebración
 - Cada personaje tiene su nota: Mimí Do · Bobi Re · Lumen Mi · Kubo Sol · Nubi La.
 - Celebraciones rítmicas a tempo tranquilo (un pulso cada 0,36 s): nota + estallido suave por pulso.
@@ -70,6 +88,6 @@ Bloques grandes (círculo rojo, cuadrado amarillo, triángulo azul) y siluetas e
 - Entrada por `InputEventScreenTouch` / `InputEventScreenDrag` (multitáctil). En PC, el ratón emula el toque.
 
 ## Próximos pasos posibles
-- Nivel propio de Nubi (formas y sombras: emparejar objetos con su sombra).
+- Segundo minijuego de Nubi (sombras de objetos reales).
 - Sustituir el arte provisional por modelos/renders definitivos (p. ej. Tripo AI).
 - Música de fondo suave y voces grabadas.

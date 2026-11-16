@@ -1,0 +1,104 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://scripts/taller_nivel2.gd" id="1_taller"]
+[ext_resource type="Texture2D" path="res://arte/fondo_taller.png" id="2_fondo"]
+[ext_resource type="Texture2D" path="res://arte/maquina.png" id="3_maquina"]
+[ext_resource type="Texture2D" path="res://arte/bombilla.png" id="4_bombilla"]
+[ext_resource type="Script" path="res://scripts/zona_iman.gd" id="5_zona"]
+[ext_resource type="Script" path="res://scripts/personaje_principal.gd" id="6_personaje"]
+[ext_resource type="Texture2D" path="res://arte/bobi.png" id="7_bobi"]
+[ext_resource type="Script" path="res://scripts/pieza_arrastrable.gd" id="8_pieza"]
+[ext_resource type="Texture2D" path="res://arte/engranaje.png" id="9_engranaje"]
+[ext_resource type="Script" path="res://scripts/retroalimentacion.gd" id="10_retro"]
+[ext_resource type="AudioStream" path="res://audio/nota_do.wav" id="11_nota"]
+[ext_resource type="Texture2D" path="res://arte/estrella.png" id="12_estrella"]
+[ext_resource type="Texture2D" path="res://arte/corazon.png" id="13_corazon"]
+[ext_resource type="Script" path="res://scripts/vigilante_inactividad.gd" id="14_vigilante"]
+[ext_resource type="Script" path="res://scripts/gestor_arrastre.gd" id="15_gestor"]
+[ext_resource type="Script" path="res://scripts/boton_casa.gd" id="16_casa"]
+[ext_resource type="Texture2D" path="res://arte/casa.png" id="17_icono_casa"]
+
+[node name="TallerNivel2" type="Node2D"]
+script = ExtResource("1_taller")
+
+[node name="Fondo" type="Sprite2D" parent="."]
+texture = ExtResource("2_fondo")
+centered = false
+
+[node name="Maquina" type="Sprite2D" parent="."]
+position = Vector2(1760, 470)
+texture = ExtResource("3_maquina")
+
+[node name="Bombilla" type="Sprite2D" parent="Maquina"]
+position = Vector2(0, -335)
+texture = ExtResource("4_bombilla")
+
+[node name="Chimenea" type="Marker2D" parent="Maquina"]
+position = Vector2(-325, -390)
+
+[node name="Enchufes" type="Node2D" parent="Maquina"]
+
+[node name="Enchufe1" type="Node2D" parent="Maquina/Enchufes"]
+position = Vector2(-300, 50)
+script = ExtResource("5_zona")
+
+[node name="Enchufe2" type="Node2D" parent="Maquina/Enchufes"]
+position = Vector2(0, 50)
+script = ExtResource("5_zona")
+
+[node name="Enchufe3" type="Node2D" parent="Maquina/Enchufes"]
+position = Vector2(300, 50)
+script = ExtResource("5_zona")
+
+[node name="Bobi" type="Node2D" parent="."]
+position = Vector2(300, 860)
+script = ExtResource("6_personaje")
+
+[node name="Sprite2D" type="Sprite2D" parent="Bobi"]
+position = Vector2(0, -242)
+texture = ExtResource("7_bobi")
+
+[node name="Piezas" type="Node2D" parent="."]
+
+[node name="Engranaje1" type="Node2D" parent="Piezas"]
+position = Vector2(660, 880)
+script = ExtResource("8_pieza")
+color = Color(0.616, 1, 0.227, 1)
+
+[node name="Visual" type="Sprite2D" parent="Piezas/Engranaje1"]
+texture = ExtResource("9_engranaje")
+
+[node name="Engranaje2" type="Node2D" parent="Piezas"]
+position = Vector2(900, 880)
+script = ExtResource("8_pieza")
+color = Color(0.247, 0.769, 1, 1)
+
+[node name="Visual" type="Sprite2D" parent="Piezas/Engranaje2"]
+texture = ExtResource("9_engranaje")
+
+[node name="Engranaje3" type="Node2D" parent="Piezas"]
+position = Vector2(1140, 880)
+script = ExtResource("8_pieza")
+color = Color(1, 0.824, 0.247, 1)
+
+[node name="Visual" type="Sprite2D" parent="Piezas/Engranaje3"]
+texture = ExtResource("9_engranaje")
+
+[node name="Retroalimentacion" type="Node2D" parent="."]
+script = ExtResource("10_retro")
+nota_base = ExtResource("11_nota")
+textura_estrella = ExtResource("12_estrella")
+textura_corazon = ExtResource("13_corazon")
+
+[node name="VigilanteInactividad" type="Node" parent="."]
+script = ExtResource("14_vigilante")
+
+[node name="GestorArrastre" type="Node2D" parent="."]
+script = ExtResource("15_gestor")
+
+[node name="CapaUI" type="CanvasLayer" parent="."]
+
+[node name="BotonCasa" type="Node2D" parent="CapaUI"]
+position = Vector2(120, 120)
+script = ExtResource("16_casa")
+icono = ExtResource("17_icono_casa")

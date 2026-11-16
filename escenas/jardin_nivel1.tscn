@@ -1,0 +1,47 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/jardin_nivel1.gd" id="1_jardin"]
+[ext_resource type="Texture2D" path="res://arte/fondo_jardin.png" id="2_fondo"]
+[ext_resource type="Script" path="res://scripts/personaje_principal.gd" id="3_personaje"]
+[ext_resource type="Texture2D" path="res://arte/mimi.png" id="4_mimi"]
+[ext_resource type="Script" path="res://scripts/retroalimentacion.gd" id="5_retro"]
+[ext_resource type="AudioStream" path="res://audio/nota_do.wav" id="6_nota"]
+[ext_resource type="Texture2D" path="res://arte/estrella.png" id="7_estrella"]
+[ext_resource type="Texture2D" path="res://arte/corazon.png" id="8_corazon"]
+[ext_resource type="Script" path="res://scripts/vigilante_inactividad.gd" id="9_vigilante"]
+[ext_resource type="Script" path="res://scripts/boton_casa.gd" id="10_casa"]
+[ext_resource type="Texture2D" path="res://arte/casa.png" id="11_icono_casa"]
+
+[node name="JardinNivel1" type="Node2D"]
+script = ExtResource("1_jardin")
+
+[node name="Fondo" type="Sprite2D" parent="."]
+texture = ExtResource("2_fondo")
+centered = false
+
+[node name="Mimi" type="Node2D" parent="."]
+position = Vector2(1170, 700)
+script = ExtResource("3_personaje")
+
+[node name="Sprite2D" type="Sprite2D" parent="Mimi"]
+position = Vector2(0, -242)
+texture = ExtResource("4_mimi")
+
+[node name="Retroalimentacion" type="Node2D" parent="."]
+script = ExtResource("5_retro")
+nota_base = ExtResource("6_nota")
+textura_estrella = ExtResource("7_estrella")
+textura_corazon = ExtResource("8_corazon")
+
+[node name="VigilanteInactividad" type="Node" parent="."]
+script = ExtResource("9_vigilante")
+
+[node name="CapaToque" type="CanvasLayer" parent="."]
+
+[node name="CapaUI" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="BotonCasa" type="Node2D" parent="CapaUI"]
+position = Vector2(120, 120)
+script = ExtResource("10_casa")
+icono = ExtResource("11_icono_casa")

@@ -1,0 +1,16 @@
+# Godot 4: caché del editor (se regenera sola)
+.godot/
+.import/
+
+# Exportaciones locales y de GitHub Actions
+build/
+*.apk
+*.aab
+
+# Claves de firma: NUNCA subirlas
+*.keystore
+*.jks
+
+# Sistema
+.DS_Store
+Thumbs.db

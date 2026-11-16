@@ -1,0 +1,12 @@
+# Texto con saltos de línea Unix (evita diferencias entre Android, Windows y Mac)
+* text=auto eol=lf
+
+# Recursos binarios
+*.png binary
+*.jpg binary
+*.webp binary
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.glb binary
+*.ttf binary

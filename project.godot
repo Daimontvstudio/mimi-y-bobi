@@ -6,8 +6,9 @@ config_version=5
 [application]
 
 config/name="Aventuras Mágicas con Mimí y Bobi"
-config/description="Menú principal · Nivel 1: El Jardín de las Sorpresas Musicales · Nivel 2: El Taller de Bobi"
+config/description="Menú · N1 Jardín de las Sorpresas Musicales · N2 Taller de Bobi · N3 Jardín de Lumen · N4 Construcción de Kubo"
 run/main_scene="res://escenas/menu_principal.tscn"
+config/version="0.3.0"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.png"
 boot_splash/bg_color=Color(0.07, 0.04, 0.18, 1)

@@ -18,6 +18,10 @@ extends Node2D
 @export var radio_agarre: float = 170.0
 ## Velocidad de giro (radianes/s) cuando está encajada.
 @export var velocidad_giro: float = 2.5
+## false para bloques (Kubo): no giran, solo rebotan.
+@export var puede_girar: bool = true
+## Forma de la pieza ("circulo", "cuadrado"...). Vacío = encaja en cualquier zona.
+@export var forma: StringName = &""
 
 var origen: Vector2          # posición inicial (a donde vuelve flotando)
 var encajada: bool = false
@@ -62,8 +66,11 @@ func encajar_en(destino: Vector2) -> void:
 	arrastrando = false
 	encajada = true
 	z_index = 5
-	_girando = true
-	_giro_extra = 10.0  # arranque con "¡brrrum!"
+	if puede_girar:
+		_girando = true
+		_giro_extra = 10.0  # arranque con "¡brrrum!"
+	elif visual:
+		visual.rotation = 0.0
 	_tween = create_tween().set_parallel(true)
 	_tween.tween_property(self, "global_position", destino, 0.28) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -86,7 +93,8 @@ func volver_a_origen() -> void:
 
 ## Toque sobre una pieza ya encajada: gira rapidísimo un momento.
 func impulso_giro(fuerza: float = 12.0) -> void:
-	_giro_extra = maxf(_giro_extra, fuerza)
+	if puede_girar:
+		_giro_extra = maxf(_giro_extra, fuerza)
 	if _tween_pop and _tween_pop.is_valid():
 		_tween_pop.kill()
 	scale = Vector2.ONE * 1.12

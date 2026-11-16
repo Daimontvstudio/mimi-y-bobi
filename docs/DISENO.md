@@ -34,7 +34,7 @@ Juego educativo y de exploración interactiva para móviles (Android / iOS), pen
 
 ## Niveles
 ### Menú principal
-Dos botones de media pantalla con Mimí (nota musical) y Bobi (engranaje). Fanfarria de 3 notas y fundido al nivel.
+Cuatro botones gigantes (una columna cada uno): Mimí (nota musical), Bobi (engranaje), Lumen (estrella de luz) y Kubo (bloques). Nubi flota arriba como guía y canta su nota al tocarla. Los personajes entran con un "pop" escalonado; al elegir, fanfarria de 3 notas y fundido al nivel.
 
 ### Nivel 1 · El Jardín de las Sorpresas Musicales (Mimí)
 Tres zonas gigantes en el tercio inferior, cada una con una flor brillante. Cada toque: nota pentatónica (grave → aguda de izquierda a derecha), partículas y rebote de Mimí.
@@ -45,6 +45,24 @@ Tres engranajes en una bandeja y una máquina con tres huecos. Cualquier engrana
 - Tocar un engranaje encajado: gira rapidísimo.
 - Con los tres: celebración (arpegio, bombilla arcoíris, partículas por la chimenea) y las piezas vuelven solas para repetir.
 
+### Nivel 3 · El Jardín de Lumen (Lumen)
+Tres flores-orbe (morado, naranja, amarillo; notas Do, Mi, La). Lumen enciende una secuencia y el niño la repite.
+- Toda flor tocada brilla y suena siempre.
+- Acierto: fiesta rítmica y la secuencia crece (de 1 hasta 4 destellos).
+- Error: sin castigo; Lumen respira y repite la secuencia. Tras 2 reintentos, la secuencia se acorta.
+- Inactividad: la flor siguiente late (pista) y después Lumen vuelve a enseñar la secuencia.
+
+### Nivel 4 · La Construcción de Kubo (Kubo + Nubi)
+Bloques grandes (círculo rojo, cuadrado amarillo, triángulo azul) y siluetas en un tablero (casita con sol, robot, tren).
+- El imán solo atrae a la forma correcta: nunca encaja "mal".
+- Si un bloque se suelta lejos, vuelve flotando y su silueta correcta brilla como pista.
+- Dibujo completo: fiesta rítmica y el tablero cambia de diseño.
+
+## Sonido y celebración
+- Cada personaje tiene su nota: Mimí Do · Bobi Re · Lumen Mi · Kubo Sol · Nubi La.
+- Celebraciones rítmicas a tempo tranquilo (un pulso cada 0,36 s): nota + estallido suave por pulso.
+- Partículas lentas que caen como confeti (gravedad baja, 1,1 s de vida), siempre con fundido.
+
 ## Arquitectura técnica
 - Motor: **Godot 4** · renderizador *Compatibilidad* (máxima compatibilidad Android y Web).
 - Resolución base 2340×1080 (Samsung S24 Ultra), horizontal, `stretch canvas_items` + `expand`.
@@ -52,6 +70,6 @@ Tres engranajes en una bandeja y una máquina con tres huecos. Cualquier engrana
 - Entrada por `InputEventScreenTouch` / `InputEventScreenDrag` (multitáctil). En PC, el ratón emula el toque.
 
 ## Próximos pasos posibles
-- Niveles de Lumen (memoria/luces), Kubo (encajar formas) y Nubi (formas y sombras).
+- Nivel propio de Nubi (formas y sombras: emparejar objetos con su sombra).
 - Sustituir el arte provisional por modelos/renders definitivos (p. ej. Tripo AI).
 - Música de fondo suave y voces grabadas.

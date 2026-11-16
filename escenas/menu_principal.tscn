@@ -1,46 +1,98 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=14 format=3]
 
-[ext_resource type="Script" path="res://scripts/menu_principal.gd" id="1_menu"]
-[ext_resource type="Texture2D" path="res://arte/fondo_menu.png" id="2_fondo"]
-[ext_resource type="Script" path="res://scripts/personaje_principal.gd" id="3_personaje"]
-[ext_resource type="Texture2D" path="res://arte/mimi.png" id="4_mimi"]
-[ext_resource type="Texture2D" path="res://arte/bobi.png" id="5_bobi"]
-[ext_resource type="Script" path="res://scripts/retroalimentacion.gd" id="6_retro"]
-[ext_resource type="AudioStream" path="res://audio/nota_do.wav" id="7_nota"]
-[ext_resource type="Texture2D" path="res://arte/estrella.png" id="8_estrella"]
-[ext_resource type="Texture2D" path="res://arte/corazon.png" id="9_corazon"]
-[ext_resource type="Script" path="res://scripts/vigilante_inactividad.gd" id="10_vigilante"]
+[ext_resource type="Script" path="res://scripts/menu_principal.gd" id="1_r"]
+[ext_resource type="Texture2D" path="res://arte/fondo_menu.png" id="2_r"]
+[ext_resource type="Script" path="res://scripts/personaje_principal.gd" id="3_r"]
+[ext_resource type="Texture2D" path="res://arte/mimi.png" id="4_r"]
+[ext_resource type="Texture2D" path="res://arte/bobi.png" id="5_r"]
+[ext_resource type="Texture2D" path="res://arte/lumen.png" id="6_r"]
+[ext_resource type="Texture2D" path="res://arte/kubo.png" id="7_r"]
+[ext_resource type="Texture2D" path="res://arte/nubi.png" id="8_r"]
+[ext_resource type="Script" path="res://scripts/retroalimentacion.gd" id="9_r"]
+[ext_resource type="AudioStream" path="res://audio/nota_do.wav" id="10_r"]
+[ext_resource type="Texture2D" path="res://arte/estrella.png" id="11_r"]
+[ext_resource type="Texture2D" path="res://arte/corazon.png" id="12_r"]
+[ext_resource type="Script" path="res://scripts/vigilante_inactividad.gd" id="13_r"]
 
 [node name="MenuPrincipal" type="Node2D"]
-script = ExtResource("1_menu")
+script = ExtResource("1_r")
 
 [node name="Fondo" type="Sprite2D" parent="."]
-texture = ExtResource("2_fondo")
+texture = ExtResource("2_r")
 centered = false
 
-[node name="Mimi" type="Node2D" parent="."]
-position = Vector2(585, 900)
-script = ExtResource("3_personaje")
+[node name="Mimi" type="Node2D" parent="." groups=["personajes"]]
+position = Vector2(292, 1000)
+scale = Vector2(0.82, 0.82)
+script = ExtResource("3_r")
+nota_propia = 0
+color_a = Color(1.000, 0.310, 0.722, 1.0)
+color_b = Color(1.000, 0.824, 0.247, 1.0)
+tocable = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Mimi"]
 position = Vector2(0, -242)
-texture = ExtResource("4_mimi")
+texture = ExtResource("4_r")
 
-[node name="Bobi" type="Node2D" parent="."]
-position = Vector2(1755, 900)
-script = ExtResource("3_personaje")
+[node name="Bobi" type="Node2D" parent="." groups=["personajes"]]
+position = Vector2(877, 1000)
+scale = Vector2(0.82, 0.82)
+script = ExtResource("3_r")
+nota_propia = 1
+color_a = Color(0.247, 0.769, 1.000, 1.0)
+color_b = Color(0.616, 1.000, 0.227, 1.0)
+tocable = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Bobi"]
 position = Vector2(0, -242)
-texture = ExtResource("5_bobi")
+texture = ExtResource("5_r")
+
+[node name="Lumen" type="Node2D" parent="." groups=["personajes"]]
+position = Vector2(1462, 1000)
+scale = Vector2(0.82, 0.82)
+script = ExtResource("3_r")
+nota_propia = 2
+color_a = Color(0.706, 0.361, 1.000, 1.0)
+color_b = Color(1.000, 0.604, 0.122, 1.0)
+tocable = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Lumen"]
+position = Vector2(0, -242)
+texture = ExtResource("6_r")
+
+[node name="Kubo" type="Node2D" parent="." groups=["personajes"]]
+position = Vector2(2047, 1000)
+scale = Vector2(0.82, 0.82)
+script = ExtResource("3_r")
+nota_propia = 3
+color_a = Color(1.000, 0.231, 0.361, 1.0)
+color_b = Color(0.965, 0.945, 0.984, 1.0)
+tocable = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Kubo"]
+position = Vector2(0, -242)
+texture = ExtResource("7_r")
+
+[node name="Nubi" type="Node2D" parent="." groups=["personajes"]]
+position = Vector2(1170, 246)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("3_r")
+nota_propia = 4
+color_a = Color(0.682, 0.910, 1.000, 1.0)
+color_b = Color(1.000, 0.824, 0.478, 1.0)
+nodo_flotante = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Nubi"]
+position = Vector2(0, -242)
+texture = ExtResource("8_r")
 
 [node name="Retroalimentacion" type="Node2D" parent="."]
-script = ExtResource("6_retro")
-nota_base = ExtResource("7_nota")
-textura_estrella = ExtResource("8_estrella")
-textura_corazon = ExtResource("9_corazon")
+script = ExtResource("9_r")
+nota_base = ExtResource("10_r")
+textura_estrella = ExtResource("11_r")
+textura_corazon = ExtResource("12_r")
 
 [node name="VigilanteInactividad" type="Node" parent="."]
-script = ExtResource("10_vigilante")
+script = ExtResource("13_r")
 
 [node name="CapaToque" type="CanvasLayer" parent="."]

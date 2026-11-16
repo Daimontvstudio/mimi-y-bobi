@@ -1,0 +1,144 @@
+[gd_scene load_steps=19 format=3]
+
+[ext_resource type="Script" path="res://scripts/kubo_nivel4.gd" id="1_r"]
+[ext_resource type="Texture2D" path="res://arte/fondo_kubo.png" id="2_r"]
+[ext_resource type="Script" path="res://scripts/personaje_principal.gd" id="3_r"]
+[ext_resource type="Texture2D" path="res://arte/kubo.png" id="4_r"]
+[ext_resource type="Texture2D" path="res://arte/nubi.png" id="5_r"]
+[ext_resource type="Script" path="res://scripts/zona_iman.gd" id="6_r"]
+[ext_resource type="Texture2D" path="res://arte/bloque_cuadrado.png" id="7_r"]
+[ext_resource type="Texture2D" path="res://arte/bloque_triangulo.png" id="8_r"]
+[ext_resource type="Texture2D" path="res://arte/bloque_circulo.png" id="9_r"]
+[ext_resource type="Script" path="res://scripts/pieza_arrastrable.gd" id="10_r"]
+[ext_resource type="Script" path="res://scripts/retroalimentacion.gd" id="11_r"]
+[ext_resource type="AudioStream" path="res://audio/nota_do.wav" id="12_r"]
+[ext_resource type="Texture2D" path="res://arte/estrella.png" id="13_r"]
+[ext_resource type="Texture2D" path="res://arte/corazon.png" id="14_r"]
+[ext_resource type="Script" path="res://scripts/vigilante_inactividad.gd" id="15_r"]
+[ext_resource type="Script" path="res://scripts/gestor_arrastre.gd" id="16_r"]
+[ext_resource type="Script" path="res://scripts/boton_casa.gd" id="17_r"]
+[ext_resource type="Texture2D" path="res://arte/casa.png" id="18_r"]
+
+[node name="KuboNivel4" type="Node2D"]
+script = ExtResource("1_r")
+
+[node name="Fondo" type="Sprite2D" parent="."]
+texture = ExtResource("2_r")
+centered = false
+
+[node name="Kubo" type="Node2D" parent="." groups=["personajes"]]
+position = Vector2(260, 900)
+script = ExtResource("3_r")
+nota_propia = 3
+color_a = Color(1.000, 0.231, 0.361, 1.0)
+color_b = Color(0.965, 0.945, 0.984, 1.0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Kubo"]
+position = Vector2(0, -242)
+texture = ExtResource("4_r")
+
+[node name="Nubi" type="Node2D" parent="." groups=["personajes"]]
+position = Vector2(1000, 280)
+scale = Vector2(0.45, 0.45)
+script = ExtResource("3_r")
+nota_propia = 4
+color_a = Color(0.682, 0.910, 1.000, 1.0)
+color_b = Color(1.000, 0.824, 0.478, 1.0)
+nodo_flotante = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Nubi"]
+position = Vector2(0, -242)
+texture = ExtResource("5_r")
+
+[node name="Tablero" type="Node2D" parent="."]
+
+[node name="SiluetaCuadrado" type="Node2D" parent="Tablero"]
+position = Vector2(1700, 740)
+script = ExtResource("6_r")
+radio_iman = 280.0
+radio_visual = 150.0
+color_guia = Color(0.541, 0.424, 1.000, 1.0)
+forma = &"cuadrado"
+
+[node name="Silueta" type="Sprite2D" parent="Tablero/SiluetaCuadrado"]
+modulate = Color(0.16, 0.13, 0.31, 0.55)
+texture = ExtResource("7_r")
+
+[node name="SiluetaTriangulo" type="Node2D" parent="Tablero"]
+position = Vector2(1700, 498)
+script = ExtResource("6_r")
+radio_iman = 280.0
+radio_visual = 150.0
+color_guia = Color(0.541, 0.424, 1.000, 1.0)
+forma = &"triangulo"
+
+[node name="Silueta" type="Sprite2D" parent="Tablero/SiluetaTriangulo"]
+modulate = Color(0.16, 0.13, 0.31, 0.55)
+texture = ExtResource("8_r")
+
+[node name="SiluetaCirculo" type="Node2D" parent="Tablero"]
+position = Vector2(2040, 290)
+script = ExtResource("6_r")
+radio_iman = 280.0
+radio_visual = 150.0
+color_guia = Color(0.541, 0.424, 1.000, 1.0)
+forma = &"circulo"
+
+[node name="Silueta" type="Sprite2D" parent="Tablero/SiluetaCirculo"]
+modulate = Color(0.16, 0.13, 0.31, 0.55)
+texture = ExtResource("9_r")
+
+[node name="Bloques" type="Node2D" parent="."]
+
+[node name="BloqueCirculo" type="Node2D" parent="Bloques"]
+position = Vector2(620, 880)
+script = ExtResource("10_r")
+color = Color(1.000, 0.231, 0.361, 1.0)
+radio_agarre = 185.0
+puede_girar = false
+forma = &"circulo"
+
+[node name="Visual" type="Sprite2D" parent="Bloques/BloqueCirculo"]
+texture = ExtResource("9_r")
+
+[node name="BloqueCuadrado" type="Node2D" parent="Bloques"]
+position = Vector2(880, 880)
+script = ExtResource("10_r")
+color = Color(1.000, 0.824, 0.247, 1.0)
+radio_agarre = 185.0
+puede_girar = false
+forma = &"cuadrado"
+
+[node name="Visual" type="Sprite2D" parent="Bloques/BloqueCuadrado"]
+texture = ExtResource("7_r")
+
+[node name="BloqueTriangulo" type="Node2D" parent="Bloques"]
+position = Vector2(1140, 880)
+script = ExtResource("10_r")
+color = Color(0.247, 0.769, 1.000, 1.0)
+radio_agarre = 185.0
+puede_girar = false
+forma = &"triangulo"
+
+[node name="Visual" type="Sprite2D" parent="Bloques/BloqueTriangulo"]
+texture = ExtResource("8_r")
+
+[node name="Retroalimentacion" type="Node2D" parent="."]
+script = ExtResource("11_r")
+nota_base = ExtResource("12_r")
+textura_estrella = ExtResource("13_r")
+textura_corazon = ExtResource("14_r")
+
+[node name="VigilanteInactividad" type="Node" parent="."]
+script = ExtResource("15_r")
+
+[node name="GestorArrastre" type="Node2D" parent="."]
+script = ExtResource("16_r")
+
+[node name="CapaUI" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="BotonCasa" type="Node2D" parent="CapaUI"]
+position = Vector2(120, 120)
+script = ExtResource("17_r")
+icono = ExtResource("18_r")

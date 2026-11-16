@@ -6,7 +6,9 @@
 ## - Imán táctil: al acercarse a una zona libre, la pieza es atraída hacia ella;
 ##   si llega muy cerca, encaja SOLA aunque el niño no levante el dedo.
 ## - Cero frustración: soltar lejos no es un fallo, la pieza vuelve flotando
-##   a la bandeja. Cualquier pieza vale en cualquier zona.
+##   a la bandeja.
+## - Formas (opcional): si pieza y zona tienen `forma`, el imán solo atrae a la
+##   pieza que coincide. Sin forma, cualquier pieza vale en cualquier zona.
 ## ============================================================================
 class_name GestorArrastre
 extends Node2D
@@ -85,7 +87,7 @@ func _al_presionar(dedo: int, punto: Vector2) -> void:
 
 func _al_arrastrar(dedo: int, punto: Vector2) -> void:
 	var pieza: PiezaArrastrable = _arrastres[dedo]
-	var zona := _zona_libre_cercana(punto)
+	var zona := _zona_libre_cercana(punto, pieza)
 	if zona:
 		var d: float = punto.distance_to(zona.global_position)
 		if d <= radio_captura_directa:
@@ -106,7 +108,7 @@ func _al_soltar(dedo: int) -> void:
 	var pieza: PiezaArrastrable = _arrastres[dedo]
 	_arrastres.erase(dedo)
 	_destinos.erase(pieza)
-	var zona := _zona_libre_cercana(pieza.global_position)
+	var zona := _zona_libre_cercana(pieza.global_position, pieza)
 	if zona:
 		_encajar(pieza, zona)
 	else:
@@ -120,11 +122,11 @@ func _encajar(pieza: PiezaArrastrable, zona: ZonaIman) -> void:
 	pieza_encajada.emit(pieza, zona)
 
 
-func _zona_libre_cercana(punto: Vector2) -> ZonaIman:
+func _zona_libre_cercana(punto: Vector2, pieza: PiezaArrastrable) -> ZonaIman:
 	var mejor: ZonaIman = null
 	var mejor_distancia: float = INF
 	for zona in zonas:
-		if zona.ocupada_por != null:
+		if zona.ocupada_por != null or not zona.acepta(pieza):
 			continue
 		var d: float = punto.distance_to(zona.global_position)
 		if d <= zona.radio_iman and d < mejor_distancia:
@@ -157,9 +159,21 @@ func pista() -> void:
 	for pieza in piezas:
 		if not pieza.encajada and not pieza.arrastrando:
 			piezas_libres.append(pieza)
-	if zonas_libres.is_empty() or piezas_libres.is_empty():
-		return
-	piezas_libres.pick_random().insinuar(zonas_libres.pick_random().global_position)
+	piezas_libres.shuffle()
+	for pieza in piezas_libres:
+		for zona in zonas_libres:
+			if zona.acepta(pieza):
+				pieza.insinuar(zona.global_position)
+				return
+
+
+## Zonas libres que aceptarían esta pieza (para resaltarlas como pista).
+func zonas_para(pieza: PiezaArrastrable) -> Array[ZonaIman]:
+	var resultado: Array[ZonaIman] = []
+	for zona in zonas:
+		if zona.ocupada_por == null and zona.acepta(pieza):
+			resultado.append(zona)
+	return resultado
 
 
 func todas_encajadas() -> bool:

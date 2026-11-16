@@ -3,6 +3,10 @@
 ## ----------------------------------------------------------------------------
 ## Función principal: celebrar_toque(). Suena una nota de la escala pentatónica
 ## y salen estrellas y corazones en el punto tocado, en el mismo frame.
+## fiesta(): celebración RÍTMICA a tempo tranquilo (≈ 90 ppm): un estallido
+## suave y una nota por pulso, alegre pero relajante.
+## Además conecta solos a todos los personajes del grupo "personajes":
+## al tocarlos suena su nota propia con partículas de sus colores.
 ##
 ## Escala pentatónica de Do (Do Re Mi Sol La Do'): no tiene notas que choquen,
 ## así que cualquier combinación de toques suena bonita.
@@ -40,6 +44,21 @@ func _ready() -> void:
 		voz.stream = nota_base
 		add_child(voz)
 		_voces.append(voz)
+	# Diferido: así todos los personajes de la escena ya están listos.
+	_conectar_personajes.call_deferred()
+
+
+func _conectar_personajes() -> void:
+	for nodo in get_tree().get_nodes_in_group("personajes"):
+		if nodo is PersonajePrincipal and nodo.tocable:
+			nodo.tocado.connect(_al_tocar_personaje)
+
+
+## Cada personaje suena con SU nota y brilla con SUS colores.
+func _al_tocar_personaje(p: PersonajePrincipal) -> void:
+	tocar_nota(p.nota_propia)
+	lanzar_particulas(p.centro_en_pantalla(), p.color_a, p.color_b, 10)
+	p.reaccionar_toque()
 
 
 ## Retroalimentación completa de un toque válido.
@@ -69,6 +88,25 @@ func arpegio(indices_notas: Array, intervalo: float = 0.12, volumen: float = vol
 		t.tween_interval(intervalo)
 
 
+## Celebración rítmica: un pulso cada `intervalo` segundos (0,36 s ≈ 83 ppm).
+## En cada pulso suena una nota y florece un estallido suave alrededor del centro.
+func fiesta(centro_pantalla: Vector2, colores: Array, notas: Array = [0, 2, 3, 4, 5],
+		intervalo: float = 0.36, dispersion: float = 170.0) -> void:
+	if colores.is_empty():
+		colores = [Color.WHITE]
+	var t := create_tween()
+	for i in notas.size():
+		t.tween_callback(_pulso_fiesta.bind(centro_pantalla, colores, notas[i], i, dispersion))
+		t.tween_interval(intervalo)
+
+
+func _pulso_fiesta(centro: Vector2, colores: Array, nota: int, i: int, dispersion: float) -> void:
+	tocar_nota(nota, volumen_db - 2.0)
+	var desfase := Vector2(randf_range(-dispersion, dispersion), randf_range(-dispersion, dispersion) * 0.5)
+	lanzar_particulas(centro + desfase, colores[i % colores.size()],
+			colores[(i + 1) % colores.size()], 10)
+
+
 ## Explosión de estrellas (color principal) y corazones (color acento).
 func lanzar_particulas(posicion_pantalla: Vector2, color_principal: Color,
 		color_acento: Color, cantidad: int = 14) -> void:
@@ -83,14 +121,14 @@ func lanzar_particulas(posicion_pantalla: Vector2, color_principal: Color,
 		p.amount = maxi(cantidad / 2, 1)
 		p.one_shot = true
 		p.explosiveness = 1.0          # todas salen a la vez: "¡pop!"
-		p.lifetime = 0.9
+		p.lifetime = 1.1
 		p.direction = Vector2.UP
 		p.spread = 180.0
-		p.initial_velocity_min = 160.0
-		p.initial_velocity_max = 320.0
-		p.gravity = Vector2(0.0, 380.0)
-		p.angular_velocity_min = -180.0
-		p.angular_velocity_max = 180.0
+		p.initial_velocity_min = 140.0
+		p.initial_velocity_max = 270.0
+		p.gravity = Vector2(0.0, 260.0)  # caen despacio, como confeti
+		p.angular_velocity_min = -120.0
+		p.angular_velocity_max = 120.0
 		if p.texture == null:
 			# Sin textura aún: cuadraditos de color grandes para poder probar.
 			p.scale_amount_min = 10.0

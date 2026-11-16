@@ -44,6 +44,7 @@ func _ready() -> void:
 
 	vigilante.llamar_atencion.connect(mimi.llamar_atencion)
 	vigilante.nino_volvio.connect(mimi.cancelar_llamada)
+	mimi.saludar_entrada()
 
 
 func _crear_zonas_por_defecto() -> void:
@@ -75,4 +76,6 @@ func _input(event: InputEvent) -> void:
 	for zona in _zonas:
 		if zona.contiene(event.position):
 			return
+	if mimi.contiene(event.position):
+		return  # Mimí ya responde con su propia nota
 	retro.lanzar_particulas(event.position, Color("fff6c9"), Color("ffffff"), 4)

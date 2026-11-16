@@ -62,6 +62,7 @@ func _ready() -> void:
 	vigilante.nino_volvio.connect(bobi.cancelar_llamada)
 
 	bombilla.modulate = COLOR_BOMBILLA_APAGADA
+	bobi.saludar_entrada()
 
 
 # ---------- Reacciones (causa → efecto) ----------
@@ -106,37 +107,30 @@ func _encender_bombilla(c: Color) -> void:
 func _celebrar() -> void:
 	_celebrando = true
 	gestor.bloqueado = true
-	retro.arpegio(ARPEGIO_FIESTA, 0.14)
+	# Fiesta rítmica que sale por la chimenea, al compás tranquilo de la música.
+	retro.fiesta(_en_pantalla(chimenea), ARCOIRIS, ARPEGIO_FIESTA, 0.36, 90.0)
 	for pieza in gestor.piezas:
 		pieza.impulso_giro(25.0)
 	bobi.llamar_atencion(3)  # saltitos de alegría
 
-	# Bombilla arcoíris + 4 explosiones por la chimenea.
+	# Bombilla arcoíris al mismo compás.
 	if _tween_bombilla and _tween_bombilla.is_valid():
 		_tween_bombilla.kill()
 	_tween_bombilla = create_tween()
 	for i in 10:
-		_tween_bombilla.tween_property(bombilla, "modulate", ARCOIRIS[i % ARCOIRIS.size()], 0.25)
-	var fiesta := create_tween()
-	for i in 4:
-		fiesta.tween_callback(_soplido_chimenea)
-		fiesta.tween_interval(0.5)
-
+		_tween_bombilla.tween_property(bombilla, "modulate", ARCOIRIS[i % ARCOIRIS.size()], 0.36)
 	# Tween ligado a este nodo: si se sale al menú a mitad, se cancela solo.
 	var espera := create_tween()
 	espera.tween_interval(segundos_celebracion)
 	espera.tween_callback(_terminar_celebracion)
 
 
-func _soplido_chimenea() -> void:
-	retro.lanzar_particulas(_en_pantalla(chimenea), ARCOIRIS[randi() % ARCOIRIS.size()],
-			Color("ffd23f"), 20)
-
-
 func _terminar_celebracion() -> void:
 	bobi.cancelar_llamada()
 	gestor.liberar_todo()
 	_encajadas = 0
+	if _tween_bombilla and _tween_bombilla.is_valid():
+		_tween_bombilla.kill()
 	bombilla.modulate = COLOR_BOMBILLA_APAGADA
 	gestor.bloqueado = false
 	_celebrando = false

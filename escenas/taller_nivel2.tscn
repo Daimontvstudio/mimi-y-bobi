@@ -50,9 +50,12 @@ script = ExtResource("5_zona")
 position = Vector2(300, 50)
 script = ExtResource("5_zona")
 
-[node name="Bobi" type="Node2D" parent="."]
+[node name="Bobi" type="Node2D" parent="." groups=["personajes"]]
 position = Vector2(300, 860)
 script = ExtResource("6_personaje")
+nota_propia = 1
+color_a = Color(0.247, 0.769, 1.000, 1.0)
+color_b = Color(0.616, 1.000, 0.227, 1.0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Bobi"]
 position = Vector2(0, -242)

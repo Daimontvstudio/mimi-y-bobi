@@ -87,6 +87,16 @@ jobs:
           godot --headless --export-release "Web" build/web/index.html
           test -f build/web/index.html
 
+      - name: Verificar escenas y scripts
+        id: verificar
+        continue-on-error: true
+        run: |
+          mkdir -p build
+          timeout 180 godot --headless -s res://herramientas/verificar.gd > build/verificacion.txt 2>&1 || true
+          cat build/verificacion.txt
+          grep -q "VERIF_FIN" build/verificacion.txt
+          ! grep -E "SCRIPT ERROR|Parse Error|VERIF_FALLO|Failed to load script|Invalid call|Invalid access|Invalid assignment" build/verificacion.txt
+
       - name: Preparar publicación web
         uses: actions/upload-pages-artifact@v3
         with:
@@ -101,7 +111,7 @@ jobs:
           test -f "build/android/${NOMBRE}.apk"
 
       - name: Publicar APK en Releases (etiqueta "prueba")
-        if: steps.apk.outcome == 'success'
+        if: always()
         uses: softprops/action-gh-release@v2
         with:
           tag_name: prueba
@@ -110,7 +120,10 @@ jobs:
           body: |
             APK de prueba generado automáticamente desde la rama main.
             Descárgalo desde el móvil e instálalo (permite "instalar apps desconocidas").
-          files: build/android/*.apk
+          files: |
+            build/android/*.apk
+            build/verificacion.txt
+          fail_on_unmatched_files: false
 
   publicar-web:
     needs: exportar

@@ -1,0 +1,101 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/lumen_nivel3.gd" id="1_r"]
+[ext_resource type="Texture2D" path="res://arte/fondo_lumen.png" id="2_r"]
+[ext_resource type="Script" path="res://scripts/personaje_principal.gd" id="3_r"]
+[ext_resource type="Texture2D" path="res://arte/lumen.png" id="4_r"]
+[ext_resource type="Script" path="res://scripts/orbe_luz.gd" id="5_r"]
+[ext_resource type="Texture2D" path="res://arte/halo.png" id="6_r"]
+[ext_resource type="Texture2D" path="res://arte/bombilla.png" id="7_r"]
+[ext_resource type="Script" path="res://scripts/retroalimentacion.gd" id="8_r"]
+[ext_resource type="AudioStream" path="res://audio/nota_do.wav" id="9_r"]
+[ext_resource type="Texture2D" path="res://arte/estrella.png" id="10_r"]
+[ext_resource type="Texture2D" path="res://arte/corazon.png" id="11_r"]
+[ext_resource type="Script" path="res://scripts/vigilante_inactividad.gd" id="12_r"]
+[ext_resource type="Script" path="res://scripts/boton_casa.gd" id="13_r"]
+[ext_resource type="Texture2D" path="res://arte/casa.png" id="14_r"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_luz"]
+blend_mode = 1
+
+[node name="LumenNivel3" type="Node2D"]
+script = ExtResource("1_r")
+
+[node name="Fondo" type="Sprite2D" parent="."]
+texture = ExtResource("2_r")
+centered = false
+
+[node name="Lumen" type="Node2D" parent="." groups=["personajes"]]
+position = Vector2(1170, 345)
+scale = Vector2(0.62, 0.62)
+script = ExtResource("3_r")
+nota_propia = 2
+color_a = Color(0.706, 0.361, 1.000, 1.0)
+color_b = Color(1.000, 0.604, 0.122, 1.0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Lumen"]
+position = Vector2(0, -242)
+texture = ExtResource("4_r")
+
+[node name="Orbes" type="Node2D" parent="."]
+
+[node name="Orbe1" type="Node2D" parent="Orbes"]
+position = Vector2(390, 690)
+script = ExtResource("5_r")
+color = Color(0.706, 0.361, 1.000, 1.0)
+
+[node name="Halo" type="Sprite2D" parent="Orbes/Orbe1"]
+material = SubResource("CanvasItemMaterial_luz")
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("6_r")
+
+[node name="Bola" type="Sprite2D" parent="Orbes/Orbe1"]
+scale = Vector2(2.3, 2.3)
+texture = ExtResource("7_r")
+
+[node name="Orbe2" type="Node2D" parent="Orbes"]
+position = Vector2(1170, 690)
+script = ExtResource("5_r")
+color = Color(1.000, 0.604, 0.122, 1.0)
+
+[node name="Halo" type="Sprite2D" parent="Orbes/Orbe2"]
+material = SubResource("CanvasItemMaterial_luz")
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("6_r")
+
+[node name="Bola" type="Sprite2D" parent="Orbes/Orbe2"]
+scale = Vector2(2.3, 2.3)
+texture = ExtResource("7_r")
+
+[node name="Orbe3" type="Node2D" parent="Orbes"]
+position = Vector2(1950, 690)
+script = ExtResource("5_r")
+color = Color(1.000, 0.824, 0.247, 1.0)
+
+[node name="Halo" type="Sprite2D" parent="Orbes/Orbe3"]
+material = SubResource("CanvasItemMaterial_luz")
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("6_r")
+
+[node name="Bola" type="Sprite2D" parent="Orbes/Orbe3"]
+scale = Vector2(2.3, 2.3)
+texture = ExtResource("7_r")
+
+[node name="Retroalimentacion" type="Node2D" parent="."]
+script = ExtResource("8_r")
+nota_base = ExtResource("9_r")
+textura_estrella = ExtResource("10_r")
+textura_corazon = ExtResource("11_r")
+
+[node name="VigilanteInactividad" type="Node" parent="."]
+script = ExtResource("12_r")
+
+[node name="CapaToque" type="CanvasLayer" parent="."]
+
+[node name="CapaUI" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="BotonCasa" type="Node2D" parent="CapaUI"]
+position = Vector2(120, 120)
+script = ExtResource("13_r")
+icono = ExtResource("14_r")

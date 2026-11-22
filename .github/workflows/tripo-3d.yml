@@ -1,0 +1,113 @@
+# Tripo 3D: crea un modelo (con esqueleto y animaciones) y sus sprites isométricos, y abre un PR con todo.
+# Se lanza a mano (Actions → Tripo 3D → Run workflow) o con un issue con la etiqueta «tripo»
+# (también puede crearlo Claude Code). Necesita el secreto TRIPO_API_KEY. Ver herramientas/tripo/scripts/LEEME.md.
+name: Tripo 3D
+on:
+  workflow_dispatch:
+    inputs:
+      descripcion:
+        description: 'Qué modelo crear (más detalle = mejor resultado; en inglés suele salir mejor)'
+        required: true
+      nombre:
+        description: 'Nombre corto del modelo (p. ej. guerrero_alado). Vacío = se saca de la descripción'
+        required: false
+      animaciones:
+        description: 'reposo, caminar, correr, saltar, ataque, disparo, golpeado, caida (vacío = sin animaciones)'
+        required: false
+        default: 'reposo,caminar,ataque'
+      esqueleto:
+        description: 'Ponerle esqueleto (personajes y criaturas)'
+        type: boolean
+        default: true
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: tripo-${{ github.event.issue.number || github.run_id }}
+
+jobs:
+  modelo:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.issue.labels.*.name, 'tripo')
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      OUT_BASE: herramientas/tripo
+      ELEV: '30'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Datos del encargo
+        id: datos
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          IN_DESCRIPCION: ${{ inputs.descripcion }}
+          IN_NOMBRE: ${{ inputs.nombre }}
+          IN_ANIMACIONES: ${{ inputs.animaciones }}
+          IN_ESQUELETO: ${{ inputs.esqueleto }}
+        run: node herramientas/tripo/scripts/datos.mjs >> "$GITHUB_OUTPUT"
+
+      - name: Crear el modelo con Tripo
+        env:
+          TRIPO_API_KEY: ${{ secrets.TRIPO_API_KEY }}
+          DESCRIPCION: ${{ steps.datos.outputs.descripcion }}
+          NOMBRE: ${{ steps.datos.outputs.nombre }}
+          ANIMACIONES: ${{ steps.datos.outputs.animaciones }}
+          ESQUELETO: ${{ steps.datos.outputs.esqueleto }}
+        run: node herramientas/tripo/scripts/tripo3d.mjs --prompt "$DESCRIPCION" --name "$NOMBRE" --out "$OUT_BASE/$NOMBRE" --rig "$ESQUELETO" --anims "$ANIMACIONES"
+
+      - name: Sprites isométricos (8 direcciones × fotogramas)
+        env:
+          NOMBRE: ${{ steps.datos.outputs.nombre }}
+        run: |
+          npm i --no-save --no-audit --no-fund --prefix /tmp/tripo three@0.170.0 playwright@1.49.1
+          npx --prefix /tmp/tripo playwright install --with-deps chromium
+          NODE_PATH=/tmp/tripo/node_modules node herramientas/tripo/scripts/render.mjs --dir "$OUT_BASE/$NOMBRE" --elev "$ELEV" --size 256 --frames 8 --three /tmp/tripo/node_modules/three
+
+      - name: Abrir un PR con el modelo y los sprites
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NOMBRE: ${{ steps.datos.outputs.nombre }}
+          DESCRIPCION: ${{ steps.datos.outputs.descripcion }}
+          ISSUE: ${{ steps.datos.outputs.issue }}
+          RUN_ID: ${{ github.run_id }}
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          BR="tripo/${NOMBRE}-${RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BR"
+          git add "$OUT_BASE/$NOMBRE"
+          git commit -m "Tripo 3D: $NOMBRE"
+          git push origin "$BR"
+          BODY="Modelo de Tripo 3D: **${DESCRIPCION}**
+
+          Carpeta: \`$OUT_BASE/$NOMBRE\` — GLB (modelo, esqueleto y animaciones) y hojas de sprites isométricas (\`sprites_*.png\`: filas = 8 direcciones, columnas = fotogramas; detalles en \`sprites.json\`).
+          ${ISSUE:+
+          Closes #$ISSUE}"
+          if URL=$(gh pr create --base "$BASE_BRANCH" --head "$BR" --title "Tripo 3D: $NOMBRE" --body "$BODY"); then
+            echo "PR: $URL"
+          else
+            URL="https://github.com/${GITHUB_REPOSITORY}/compare/${BASE_BRANCH}...${BR}?expand=1"
+            echo "::warning::No se pudo abrir el PR (activa Settings → Actions → General → «Allow GitHub Actions to create and approve pull requests»). Rama lista: $URL"
+          fi
+          if [ -n "$ISSUE" ]; then gh issue comment "$ISSUE" --body "✅ Modelo listo: $URL"; fi
+
+      - name: Avisar del error en el issue
+        if: failure() && github.event_name == 'issues'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue comment "$ISSUE" --body "❌ Tripo no pudo crear el modelo. Detalles: $RUN_URL"
